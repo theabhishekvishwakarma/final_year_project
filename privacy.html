@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legal Documents | Gramfo</title>
+    <style>
+        :root {
+            --primary: #38b02b;
+            --secondary: #4299E1;
+            --accent: #3182CE;
+            --text: #2D3748;
+            --background: #F7FAFC;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 4rem 1rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 1rem;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2rem;
+        }
+
+        .toc {
+            position: sticky;
+            top: 2rem;
+            align-self: start;
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .toc h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .toc ul {
+            list-style: none;
+        }
+
+        .toc li {
+            margin: 0.5rem 0;
+        }
+
+        .toc a {
+            color: var(--text);
+            text-decoration: none;
+            padding: 0.5rem;
+            border-radius: 6px;
+            display: block;
+            transition: all 0.2s ease;
+        }
+
+        .toc a:hover {
+            background: var(--background);
+            color: var(--primary);
+            transform: translateX(4px);
+        }
+
+        .content {
+            background: white;
+            border-radius: 12px;
+            padding: 3rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .section {
+            margin-bottom: 3rem;
+            scroll-margin-top: 2rem;
+        }
+
+        .section h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .section h2:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.4em;
+            height: 1em;
+            width: 4px;
+            background: var(--secondary);
+            border-radius: 2px;
+        }
+
+        .section p {
+            margin-bottom: 1.5rem;
+            color: #4A5568;
+        }
+
+        .section ul {
+            padding-left: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .highlight {
+            background: var(--background);
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+            border-left: 4px solid var(--secondary);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .toc {
+                position: static;
+                margin-bottom: 2rem;
+            }
+
+            .content {
+                padding: 2rem;
+            }
+
+            .section h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Legal Documents</h1>
+        <p>Updated: September 2023 | Effective immediately</p>
+    </div>
+
+    <div class="container">
+        <nav class="toc">
+            <h3>Table of Contents</h3>
+            <ul>
+                <li><a href="#privacy-intro">1. Privacy Policy</a></li>
+                <li><a href="#data-collection">2. Data Collection</a></li>
+                <li><a href="#data-use">3. Data Use</a></li>
+                <li><a href="#terms-intro">4. Terms of Service</a></li>
+                <li><a href="#user-responsibilities">5. User Responsibilities</a></li>
+                <li><a href="#termination">6. Termination</a></li>
+            </ul>
+        </nav>
+
+        <main class="content">
+            <!-- Privacy Policy -->
+            <section id="privacy-intro" class="section">
+                <h2>Privacy Policy</h2>
+                <p>Gramfo is committed to protecting your personal information. This policy outlines how we collect, use, and protect your data when you use our services.</p>
+                
+                <div class="highlight">
+                    <strong>Key Points:</strong>
+                    <ul>
+                        <li>We never sell your personal data</li>
+                        <li>End-to-end encryption for all communications</li>
+                        <li>Regular security audits and compliance checks</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="data-collection" class="section">
+                <h2>Data Collection</h2>
+                <p>We collect information to provide and improve our services:</p>
+                <ul>
+                    <li><strong>Account Information:</strong> Name, email, profile details</li>
+                    <li><strong>Usage Data:</strong> Features used, session duration, preferences</li>
+                    <li><strong>Technical Data:</strong> IP address, device information, browser type</li>
+                    <li><strong>Content Data:</strong> Documents processed through our services</li>
+                </ul>
+            </section>
+
+            <section id="data-use" class="section">
+                <h2>Data Use & Sharing</h2>
+                <p>How we use collected information:</p>
+                <ul>
+                    <li>Provide and maintain service functionality</li>
+                    <li>Improve product features and algorithms</li>
+                    <li>Personalize user experience</li>
+                    <li>Communicate important updates</li>
+                </ul>
+                <div class="highlight">
+                    <p>We only share data with third parties when:</p>
+                    <ul>
+                        <li>Required by law enforcement</li>
+                        <li>Essential for service delivery (e.g., payment processors)</li>
+                        <li>With explicit user consent</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Terms of Service -->
+            <section id="terms-intro" class="section">
+                <h2>Terms of Service</h2>
+                <p>By using Gramfo's services, you agree to these binding terms:</p>
+                <ul>
+                    <li>Minimum age requirement: 13 years</li>
+                    <li>Compliance with all applicable laws</li>
+                    <li>Responsibility for account security</li>
+                </ul>
+            </section>
+
+            <section id="user-responsibilities" class="section">
+                <h2>User Responsibilities</h2>
+                <p>Users must not:</p>
+                <ul>
+                    <li>Reverse engineer or decompile our software</li>
+                    <li>Use services for illegal activities</li>
+                    <li>Share login credentials</li>
+                    <li>Upload malicious content</li>
+                </ul>
+                <div class="highlight">
+                    <p>Content Ownership:</p>
+                    <ul>
+                        <li>Users retain ownership of all submitted content</li>
+                        <li>Gramfo claims no intellectual property rights</li>
+                        <li>License grant for service operation</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="termination" class="section">
+                <h2>Termination & Disputes</h2>
+                <p>We reserve the right to terminate accounts for:</p>
+                <ul>
+                    <li>Violation of these terms</li>
+                    <li>Fraudulent activity</li>
+                    <li>Extended account inactivity</li>
+                </ul>
+                <p><strong>Governing Law:</strong> Disputes will be resolved under California law through binding arbitration.</p>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            });
+        });
+
+        // Highlight active TOC item
+        window.addEventListener('scroll', function() {
+            let sections = document.querySelectorAll('.section');
+            let scrollPosition = window.pageYOffset;
+            
+            sections.forEach(section => {
+                let sectionTop = section.offsetTop - 150;
+                let sectionBottom = sectionTop + section.offsetHeight;
+                
+                if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                    let id = section.getAttribute('id');
+                    document.querySelectorAll('.toc a').forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${id}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

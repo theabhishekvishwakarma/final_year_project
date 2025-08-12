@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Urban Gardening Revolution - Gramfo</title>
+
+    <!-- Required Libraries -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 4px;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 1.5rem 2rem;
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(10px);
+        }
+
+        .navbar.scrolled {
+            padding: 0.75rem 2rem;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-logo {
+            font-weight: 700;
+            color: var(--dark-color) !important;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link {
+            color: var(--dark-color) !important;
+            font-weight: 500;
+            margin: 0 1rem;
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Add these new styles for detailed page */
+        .story-hero {
+            position: relative;
+            overflow: hidden;
+            border-radius: 16px;
+            margin: 2rem 0;
+        }
+
+        .story-hero-video {
+            width: 100%;
+            height: 60vh;
+            object-fit: cover;
+        }
+
+        .story-meta {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 16px;
+            margin-top: -50px;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .impact-timeline {
+            position: relative;
+            padding-left: 40px;
+            margin: 3rem 0;
+        }
+
+        .impact-timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            width: 3px;
+            height: 100%;
+            background: var(--primary-color);
+            opacity: 0.2;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+            padding-left: 30px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 5px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border: 3px solid var(--primary-color);
+            border-radius: 50%;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: rgba(0, 200, 83, 0.05);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .gallery-masonry {
+            columns: 3;
+            gap: 1.5rem;
+        }
+
+        .gallery-item {
+            break-inside: avoid;
+            margin-bottom: 1.5rem;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.02);
+        }
+
+        @media (max-width: 768px) {
+            .gallery-masonry {
+                columns: 2;
+            }
+
+            .story-hero-video {
+                height: 40vh;
+            }
+
+            .story-meta {
+                margin-top: -30px;
+                padding: 1.5rem;
+            }
+        }
+
+        .progress-bar-custom {
+            height: 8px;
+            border-radius: 4px;
+            background: rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary-color);
+            width: 75%;
+            transition: width 0.5s ease;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation (Same as previous pages) -->
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand nav-logo" href="{{ url_for('home') }}">
+                <i class="fas fa-leaf me-2"></i>GRAMFO
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-lg-center">
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('home') }}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('about') }}">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('home') }}#impact">Impact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('home') }}#events">Events</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                    <li class="nav-item"><a class="btn btn-success px-4 py-2 ms-3" href="{{ url_for('login') }}">Join Now</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Story Hero Section -->
+    <section class="container mt-5 pt-5">
+
+        <div class="story-hero" data-aos="zoom-in">
+            <video class="story-hero-video" poster="assets/images/urban-gardening.jpg" controls>
+                <source src="assets/videos/urban-gardening.mp4" type="video/mp4">
+            </video>
+        </div>
+
+        <!-- Story Meta -->
+        <div class="story-meta" data-aos="fade-up">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <span class="badge bg-success me-2">Completed</span>
+                    <span class="text-muted">March 15, 2024</span>
+                </div>
+                <div class="text-end">
+                    <h5 class="text-success mb-0">150+ Gardens Created</h5>
+                    <small class="text-muted">Project Achievement</small>
+                </div>
+            </div>
+
+            <h1 class="display-5 fw-bold mb-3">Urban Gardening Revolution</h1>
+            <p class="lead text-secondary">Transforming Mumbai's rooftops into green spaces through community
+                collaboration</p>
+
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <i class="fas fa-seedling fa-2x text-success mb-3"></i>
+                    <h3>150+</h3>
+                    <p class="text-muted mb-0">Gardens Created</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-users fa-2x text-success mb-3"></i>
+                    <h3>2,000+</h3>
+                    <p class="text-muted mb-0">Volunteers Engaged</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-leaf fa-2x text-success mb-3"></i>
+                    <h3>85%</h3>
+                    <p class="text-muted mb-0">Green Cover Increase</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Story Content -->
+    <section class="container">
+        <!-- Project Timeline -->
+        <div class="impact-timeline" data-aos="fade-up">
+            <h2 class="fw-bold mb-5">Project Timeline</h2>
+            <div class="timeline-item">
+                <h4 class="fw-bold">Initiation Phase</h4>
+                <p class="text-secondary">Community workshops and planning sessions</p>
+                <div class="progress-bar-custom mb-2">
+                    <div class="progress-fill"></div>
+                </div>
+                <small class="text-muted">Jan 2023 - Mar 2023</small>
+            </div>
+            <!-- Add more timeline items -->
+        </div>
+
+        <!-- Detailed Content -->
+        <article class="article-content" data-aos="fade-up">
+            <h2 class="fw-bold mb-4">About the Project</h2>
+            <p class="text-secondary lead mb-4">The Urban Gardening Revolution transformed underutilized rooftops across
+                Mumbai into thriving green spaces, creating community hubs for sustainable living.</p>
+
+            <div class="row g-4 mb-5">
+                <div class="col-md-6">
+                    <img src="assets/images/garden-1.jpg" class="img-fluid rounded-3" alt="Community Garden">
+                </div>
+                <div class="col-md-6">
+                    <h3 class="h4 fw-bold mb-3">Key Achievements</h3>
+                    <ul class="list-unstyled text-secondary">
+                        <li class="mb-3">
+                            <i class="fas fa-check-circle text-success me-2"></i>
+                            150+ operational rooftop gardens
+                        </li>
+                        <li class="mb-3">
+                            <i class="fas fa-check-circle text-success me-2"></i>
+                            2,000+ community members trained
+                        </li>
+                        <li class="mb-3">
+                            <i class="fas fa-check-circle text-success me-2"></i>
+                            15 tons of organic produce annually
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </article>
+
+        <!-- Photo Gallery -->
+        <section class="gallery-masonry" data-aos="fade-up">
+            <div class="gallery-item">
+                <img src="assets/images/garden-2.jpg" class="img-fluid" alt="Garden">
+            </div>
+            <div class="gallery-item">
+                <img src="assets/images/garden-3.jpg" class="img-fluid" alt="Garden">
+            </div>
+            <!-- Add more gallery items -->
+        </section>
+
+        <!-- Call to Action -->
+        <div class="text-center my-5 py-5" data-aos="fade-up">
+            <h2 class="fw-bold mb-4">Join the Movement</h2>
+            <p class="text-secondary mb-4">Be part of our next urban transformation project</p>
+            <a href="upcoming-events.html" class="btn btn-success btn-lg px-5 py-3">
+                <i class="fas fa-hands-helping me-2"></i>
+                Volunteer Now
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer (Same as previous pages) -->
+    <!-- Modern Footer -->
+    <footer class="bg-dark text-light pt-5">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-4">
+                    <h5 class="text-white mb-4">About Gramfo</h5>
+                    <p class="text-secondary">
+                        Leading the way in environmental conservation and sustainable community development.
+                    </p>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="text-white mb-4">Quick Links</h5>
+                    <div class="d-flex flex-column">
+                        <a href="#" class="text-secondary mb-2">Our Mission</a>
+                        <a href="#" class="text-secondary mb-2">Success Stories</a>
+                        <a href="#" class="text-secondary mb-2">Get Involved</a>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="text-white mb-4">Connect With Us</h5>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="text-secondary"><i class="fab fa-twitter fa-lg"></i></a>
+                        <a href="#" class="text-secondary"><i class="fab fa-instagram fa-lg"></i></a>
+                        <a href="#" class="text-secondary"><i class="fab fa-linkedin fa-lg"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center py-4 border-top border-secondary mt-5">
+                <p class="mb-0 text-secondary">&copy; 2024 Gramfo. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100
+        });
+
+        // Dynamic Content Loading (Example)
+        const urlParams = new URLSearchParams(window.location.search);
+        const storyId = urlParams.get('id');
+
+
+        // Update page content based on storyId
+        document.addEventListener('DOMContentLoaded', () => {
+            if (stories[storyId]) {
+                document.title = stories[storyId].title + " - Gramfo";
+                // Update other elements accordingly
+            }
+        });
+
+        // Scroll Progress Indicator
+        window.addEventListener('scroll', () => {
+            const progress = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            document.querySelector('.progress-fill').style.width = `${progress}%`;
+        });
+
+        // Smooth Scroll for Anchor Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100
+        });
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            navbar.classList.toggle('scrolled', window.scrollY > 100);
+        });
+
+        // Video Play Control
+        document.querySelectorAll('.story-video').forEach(video => {
+            video.addEventListener('mouseenter', () => video.play());
+            video.addEventListener('mouseleave', () => video.pause());
+        });
+    </script>
+
+    <!-- In your viewstory.html (dynamic content page) -->
+    <script>
+        // Story Data Configuration
+        const stories = {
+            1: {
+                title: "Urban Gardening Revolution",
+                category: "Community",
+                date: "March 15, 2024",
+                video: "assets/videos/urban-gardening.mp4",
+                poster: "assets/images/urban-gardening.jpg",
+                stats: {
+                    gardens: "150+",
+                    volunteers: "2,000+",
+                    coverage: "85%"
+                },
+                timeline: [
+                    {
+                        title: "Initiation Phase",
+                        description: "Community workshops and planning sessions",
+                        duration: "Jan 2023 - Mar 2023",
+                        progress: 75
+                    }
+                ],
+                gallery: [
+                    "assets/images/garden-1.jpg",
+                    "assets/images/garden-2.jpg",
+                    "assets/images/garden-3.jpg"
+                ]
+            },
+            2: {
+                title: "Plastic Recycling Initiative",
+                category: "Recycling",
+                date: "April 2, 2024",
+                video: "assets/videos/recycling-initiative.mp4",
+                poster: "assets/images/plastic-recycling.jpg",
+                stats: {
+                    processed: "5T",
+                    structures: "50",
+                    communities: "12"
+                },
+                timeline: [
+                    {
+                        title: "Collection Phase",
+                        description: "Plastic waste collection drives",
+                        duration: "Feb 2024 - Mar 2024",
+                        progress: 60
+                    }
+                ],
+                gallery: [
+                    "assets/images/recycle-1.jpg",
+                    "assets/images/recycle-2.jpg"
+                ]
+            },
+            3: {
+                title: "Coastal Cleanup Drive",
+                category: "Conservation",
+                date: "March 28, 2024",
+                video: "assets/videos/beach-cleanup.mp4",
+                poster: "assets/images/coastal-cleanup.jpg",
+                stats: {
+                    collected: "10T",
+                    distance: "3km",
+                    volunteers: "1,500+"
+                },
+                timeline: [
+                    {
+                        title: "Cleanup Phase",
+                        description: "Beach cleaning operations",
+                        duration: "Feb 2024 - Mar 2024",
+                        progress: 90
+                    }
+                ],
+                gallery: [
+                    "assets/images/beach-1.jpg",
+                    "assets/images/beach-2.jpg"
+                ]
+            },
+            4: {
+                id: 4,
+                title: "Urban Forest Project",
+                category: "Afforestation",
+                date: "April 15, 2024",
+                views: "18K",
+                video: "assets/videos/afforestation.mp4",
+                poster: "assets/images/tree-plantation.jpg",
+                stats: {
+                    treesPlanted: "15k",
+                    temperatureDrop: "2°C",
+                    areaCovered: "25 acres"
+                },
+                timeline: [
+                    {
+                        title: "Site Selection",
+                        description: "Identifying suitable urban areas for afforestation",
+                        duration: "Jan 2024 - Feb 2024",
+                        progress: 100
+                    },
+                    {
+                        title: "Plantation Drive",
+                        description: "Community-led tree planting initiatives",
+                        duration: "Mar 2024 - Present",
+                        progress: 75
+                    },
+                    {
+                        title: "Maintenance Phase",
+                        description: "Ongoing care and monitoring of planted trees",
+                        duration: "May 2024 - Ongoing",
+                        progress: 25
+                    }
+                ],
+                gallery: [
+                    "assets/images/forest-1.jpg",
+                    "assets/images/forest-2.jpg",
+                    "assets/images/forest-3.jpg"
+                ],
+                content: {
+                    description: "Creating green corridors to combat urban heat islands and improve air quality in metropolitan areas.",
+                    achievements: [
+                        "Reduced local temperatures by 2°C",
+                        "Improved air quality index by 30%",
+                        "Created 50+ green jobs in urban areas"
+                    ],
+                    impact: {
+                        temperature: "2°C reduction in local temperature",
+                        biodiversity: "15+ new bird species observed",
+                        employment: "50+ green jobs created"
+                    }
+                }
+            
+            },
+            5: {
+                id: 5,
+                title: "Plastic Revolution in Mumbai",
+                category: "Environment",
+                date: "March 15, 2024",
+                views: "15K",
+                video: "assets/videos/plastic-revolution.mp4",
+                poster: "assets/images/plastic-waste.jpg",
+                stats: {
+                    volunteers: "500+",
+                    recycled: "10K kg",
+                    communities: "15"
+                },
+                timeline: [
+                    {
+                        title: "Pilot Program",
+                        description: "Initial waste collection and sorting",
+                        duration: "Jan 2023 - Mar 2023",
+                        progress: 100
+                    },
+                    {
+                        title: "Expansion Phase",
+                        description: "Community training and infrastructure development",
+                        duration: "Apr 2023 - Dec 2023",
+                        progress: 100
+                    }
+                ],
+                gallery: [
+                    "assets/images/plastic-1.jpg",
+                    "assets/images/plastic-2.jpg",
+                    "assets/images/plastic-3.jpg"
+                ],
+                content: {
+                    description: "How local volunteers transformed waste management in Dharavi through innovative recycling solutions and community engagement.",
+                    achievements: [
+                        "Reduced neighborhood plastic waste by 70%",
+                        "Created 150+ green jobs in the community",
+                        "Developed new recycling techniques for mixed plastics"
+                    ]
+                }
+            },
+            6: {
+                id: 6,
+                title: "Goa Beach Restoration",
+                category: "Cleanup",
+                date: "April 2, 2024",
+                views: "8K",
+                video: "assets/videos/beach-cleanup.mp4",
+                poster: "assets/images/GoaBeachRestoration.webp",
+                stats: {
+                    volunteers: "300+",
+                    wasteCollected: "5 Tons",
+                    areaCleaned: "2.5 km"
+                },
+                timeline: [
+                    {
+                        title: "Preparation Phase",
+                        description: "Logistics planning and volunteer recruitment",
+                        duration: "Feb 2024 - Mar 2024",
+                        progress: 100
+                    },
+                    {
+                        title: "Cleanup Drive",
+                        description: "Main cleanup operations and waste processing",
+                        duration: "Apr 2024 - Present",
+                        progress: 85
+                    }
+                ],
+                gallery: [
+                    "assets/images/beach-1.jpg",
+                    "assets/images/beach-2.jpg",
+                    "assets/images/beach-3.jpg"
+                ],
+                content: {
+                    description: "Community-led initiative removes 5 tons of waste from popular tourist beaches, implementing sustainable waste management systems.",
+                    achievements: [
+                        "Restored 2.5km of coastline",
+                        "Implemented permanent waste collection points",
+                        "Educated 500+ local businesses on waste management"
+                    ]
+                }
+            },
+            7: {
+                id: 7,
+                title: "Sustainable Living Workshop",
+                category: "Education",
+                date: "April 25, 2024",
+                views: "12K",
+                video: "assets/videos/sustainable-workshop.mp4",
+                poster: "assets/images/SustainableLivingWorkshop.jpg",
+                stats: {
+                    participants: "200+",
+                    villages: "15",
+                    installations: "50+"
+                },
+                timeline: [
+                    {
+                        title: "Curriculum Development",
+                        description: "Creating practical training modules",
+                        duration: "Jan 2024 - Feb 2024",
+                        progress: 100
+                    },
+                    {
+                        title: "Rural Outreach",
+                        description: "Workshop implementation in villages",
+                        duration: "Mar 2024 - Present",
+                        progress: 75
+                    }
+                ],
+                gallery: [
+                    "assets/images/workshop-1.jpg",
+                    "assets/images/workshop-2.jpg",
+                    "assets/images/workshop-3.jpg"
+                ],
+                content: {
+                    description: "Empowering rural communities with practical workshops on eco-friendly practices and renewable energy solutions.",
+                    achievements: [
+                        "Trained 200+ villagers in sustainable practices",
+                        "Installed 50+ solar power systems",
+                        "Reduced firewood consumption by 40% in target areas"
+                    ]
+                }
+            }
+        
+        };
+
+        // Dynamic Content Loader
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const storyId = urlParams.get('id');
+            const story = stories[storyId];
+
+            if (story) {
+                // Update Basic Info
+                document.title = `${story.title} - Gramfo`;
+                document.querySelector('.story-hero-video source').src = story.video;
+                document.querySelector('.story-hero-video').poster = story.poster;
+                document.querySelector('.display-5').textContent = story.title;
+                document.querySelector('.lead').textContent = story.description;
+
+                // Update Stats
+                const statCards = document.querySelectorAll('.stat-card');
+                statCards[0].querySelector('h3').textContent = story.stats.gardens || story.stats.processed;
+                statCards[1].querySelector('h3').textContent = story.stats.volunteers || story.stats.structures;
+                statCards[2].querySelector('h3').textContent = story.stats.coverage || story.stats.communities;
+
+                // Update Timeline
+                const timelineContainer = document.querySelector('.impact-timeline');
+                timelineContainer.innerHTML = `
+                <h2 class="fw-bold mb-5">Project Timeline</h2>
+                ${story.timeline.map(item => `
+                    <div class="timeline-item">
+                        <h4 class="fw-bold">${item.title}</h4>
+                        <p class="text-secondary">${item.description}</p>
+                        <div class="progress-bar-custom mb-2">
+                            <div class="progress-fill" style="width: ${item.progress}%"></div>
+                        </div>
+                        <small class="text-muted">${item.duration}</small>
+                    </div>
+                `).join('')}
+            `;
+
+                // Update Gallery
+                const galleryContainer = document.querySelector('.gallery-masonry');
+                galleryContainer.innerHTML = story.gallery.map(img => `
+                <div class="gallery-item">
+                    <img src="${img}" class="img-fluid" alt="${story.title}">
+                </div>
+            `).join('');
+
+                // Update Metadata
+                document.querySelector('.badge').textContent = story.category;
+                document.querySelector('.text-muted').textContent = story.date;
+            } else {
+                // Handle invalid story ID
+                window.location.href = '/404.html';
+            }
+        });
+    </script>
+</body>
+
+</html>

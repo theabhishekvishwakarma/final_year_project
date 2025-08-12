@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upcoming Environmental Events - EcoIndia</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 4px;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 1.5rem 2rem;
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(10px);
+        }
+
+        .navbar.scrolled {
+            padding: 0.75rem 2rem;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-logo {
+            font-weight: 700;
+            color: var(--dark-color) !important;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link {
+            color: var(--dark-color) !important;
+            font-weight: 500;
+            margin: 0 1rem;
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .event-hero {
+            background: linear-gradient(rgba(0, 100, 0, 0.7), rgba(0, 100, 0, 0.7)),
+                url('assets/images/event-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            padding: 120px 0 80px;
+        }
+
+        .event-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .event-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-image-wrapper {
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card-img-top {
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .event-card:hover .card-img-top {
+            transform: scale(1.05);
+        }
+
+        .date-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .date-badge .day {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #228B22;
+        }
+
+        .event-tag {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: #228B22;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .registration-badge {
+            background: #ff6b6b;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+        
+        .search-section {
+        background: rgba(34, 139, 34, 0.05);
+    }
+
+    .search-bar {
+        border-radius: 30px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .search-bar input {
+        border: none;
+        padding: 1rem 1.5rem;
+        font-size: 1.1rem;
+    }
+
+    .search-bar input:focus {
+        box-shadow: none;
+    }
+
+    .search-bar button {
+        border-radius: 0 30px 30px 0;
+        padding: 0 2rem;
+        background: #228B22;
+        border: none;
+    }
+
+    @media (max-width: 768px) {
+        .search-bar input {
+            padding: 0.8rem 1.2rem;
+            font-size: 1rem;
+        }
+        
+        .search-bar button {
+            padding: 0 1.5rem;
+        }
+    }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand nav-logo" href="#">GRAMFO</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item active"><a class="nav-link" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/pages/about.html">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/#impact">Impact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/#events">Events</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/pages/dash-board.html">Dashboard</a></li>
+                    <li class="nav-item"><a class="btn btn-success ms-3" href="login.html">Join Now</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- search-bar -->
+    <section class="search-section" style="padding-top: 7rem !important;padding-bottom: 3rem !important;">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8 col-lg-6">
+                    <div class="input-group search-bar">
+                        <input type="text" id="searchInput" class="form-control" placeholder="Search events..." 
+                               aria-label="Search events" aria-describedby="search-button">
+                        <button class="btn btn-success" type="button" id="search-button">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div id="noResults" class="text-center mt-4" style="display: none;">
+                <h4 class="text-muted">No events found matching your search</h4>
+                <p class="text-muted">Try different keywords like "tech", "workshop", or "youth"</p>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Events Page Hero Section -->
+    <section class="event-hero text-white">
+        <div class="container text-center">
+            <h1 class="display-4 fw-bold mb-3">Upcoming Environmental Events</h1>
+            <p class="lead">Join India's movement towards sustainable development</p>
+        </div>
+    </section>
+
+    <!-- Events Grid -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row g-4">
+                <!-- Original 3 Events -->
+                <!-- Add original event cards here -->
+
+                <!-- Additional 10 Events -->
+                <!-- Event 4 -->
+                <div class="col-lg-4 col-md-6" data-aos="fade-up">
+                    <div class="card event-card h-100">
+                        <div class="card-image-wrapper">
+                            <span class="event-tag">Afforestation</span>
+                            <img src="/static/images/Himalayan Reforestation Drive.jpg" class="card-img-top"
+                                alt="Himalayan Reforestation">
+                            <div class="date-badge">
+                                <div class="day">28</div>
+                                <div class="month">May</div>
+                                <div class="year">2025</div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>Himalayan Reforestation Drive</h3>
+                            <div class="d-flex align-items-center my-2">
+                                <i class="fas fa-map-marker-alt text-success me-2"></i>
+                                <span>Shimla, Himachal Pradesh</span>
+                            </div>
+                            <p class="text-muted">Participate in planting 10,000 native trees in the Himalayan foothills
+                                to combat soil erosion.</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="registration-badge">Last 50 spots!</span>
+                                <a href="registrerDetails.html?id=4" class="btn btn-success btn-sm">
+                                    Join Now <i class="fas fa-arrow-right ms-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event 5 -->
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="card event-card h-100">
+                        <div class="card-image-wrapper">
+                            <span class="event-tag">Workshop</span>
+                            <img src="/static/images/fashion.jpg" class="card-img-top" alt="Sustainable Fashion">
+                            <div class="date-badge">
+                                <div class="day">01</div>
+                                <div class="month">Jun</div>
+                                <div class="year">2025</div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>Sustainable Fashion Workshop</h3>
+                            <div class="d-flex align-items-center my-2">
+                                <i class="fas fa-map-marker-alt text-success me-2"></i>
+                                <span>Mumbai Design Hub</span>
+                            </div>
+                            <p class="text-muted">Learn about sustainable textile production and eco-friendly fashion
+                                design practices.</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="text-muted"><i class="fas fa-rupee-sign"></i> 999</span>
+                                <a href="registrerDetails.html?id=5" class="btn btn-success btn-sm">
+                                    Enroll Now<i class="fas fa-arrow-right ms-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Event 6 - Coastal Cleanup -->
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="150">
+                    <div class="card event-card h-100">
+                        <div class="card-image-wrapper">
+                            <span class="event-tag">Beach Cleanup</span>
+                            <img src="/static/images/Goa Coastal Cleanup Drive.jpg" class="card-img-top"
+                                alt="Coastal Cleanup">
+                            <div class="date-badge">
+                                <div class="day">05</div>
+                                <div class="month">Jun</div>
+                                <div class="year">2025</div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>Goa Coastal Cleanup Drive</h3>
+                            <div class="d-flex align-items-center my-2">
+                                <i class="fas fa-map-marker-alt text-success me-2"></i>
+                                <span>Miramar Beach, Goa</span>
+                            </div>
+                            <p class="text-muted">Join 1000+ volunteers in cleaning 5km of coastline. Free refreshments
+                                and eco-kits provided.</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="registration-badge">Free Event</span>
+                                <a href="registrerDetails.html?id=6" class="btn btn-success btn-sm">
+                                    Join Now <i class="fas fa-arrow-right ms-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event 7 - Organic Farming -->
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card event-card h-100">
+                        <div class="card-image-wrapper">
+                            <span class="event-tag">Agriculture</span>
+                            <img src="/static/images/Organic Farming Workshop.png" class="card-img-top"
+                                alt="Organic Farming">
+                            <div class="date-badge">
+                                <div class="day">12</div>
+                                <div class="month">Jun</div>
+                                <div class="year">2025</div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>Organic Farming Workshop</h3>
+                            <div class="d-flex align-items-center my-2">
+                                <i class="fas fa-map-marker-alt text-success me-2"></i>
+                                <span>Chennai Agricultural University</span>
+                            </div>
+                            <p class="text-muted">Learn sustainable farming techniques with practical demonstrations.
+                                Certification provided.</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="text-muted"><i class="fas fa-rupee-sign"></i> 499</span>
+                                <a href="registrerDetails.html?id=2" class="btn btn-success btn-sm">
+                                    Register <i class="fas fa-arrow-right ms-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event 8 - E-Waste Recycling -->
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="250">
+                    <div class="card event-card h-100">
+                        <div class="card-image-wrapper">
+                            <span class="event-tag">Recycling</span>
+                            <img src="/static/images/E-Waste Recycling Camp.jpg" class="card-img-top"
+                                alt="E-Waste Recycling">
+                            <div class="date-badge">
+                                <div class="day">18</div>
+                                <div class="month">Jun</div>
+                                <div class="year">2025</div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>E-Waste Recycling Camp</h3>
+                            <div class="d-flex align-items-center my-2">
+                                <i class="fas fa-map-marker-alt text-success me-2"></i>
+                                <span>Bangalore City Center</span>
+                            </div>
+                            <p class="text-muted">Responsibly dispose electronic waste and learn about circular economy
+                                models.</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="registration-badge">Free Recycling</span>
+                                <a href="registrerDetails.html?id=8" class="btn btn-success btn-sm">
+                                    Participate<i class="fas fa-arrow-right ms-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event 9 - Wildlife Conservation -->
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="card event-card h-100">
+                        <div class="card-image-wrapper">
+                            <span class="event-tag">Wildlife</span>
+                            <img src="/static/images/Wildlife Conservation Webinar.jpg" class="card-img-top"
+                                alt="Wildlife Conservation">
+                            <div class="date-badge">
+                                <div class="day">25</div>
+                                <div class="month">Jun</div>
+                                <div class="year">2025</div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>Wildlife Conservation Webinar</h3>
+                            <div class="d-flex align-items-center my-2">
+                                <i class="fas fa-map-marker-alt text-success me-2"></i>
+                                <span>Online Event</span>
+                            </div>
+                            <p class="text-muted">Interactive session with leading tiger conservation experts from
+                                across India.</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="text-muted"><i class="fas fa-video"></i> Zoom</span>
+                                <a href="registrerDetails.html?id=9" class="btn btn-success btn-sm">
+                                    Join Webinar <i class="fas fa-arrow-right ms-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event 10 - Green Tech Hackathon -->
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="350">
+                    <div class="card event-card h-100">
+                        <div class="card-image-wrapper">
+                            <span class="event-tag">Technology</span>
+                            <img src="/static/images/Green Tech Hackathon.jpg" class="card-img-top" alt="Green Tech">
+                            <div class="date-badge">
+                                <div class="day">02</div>
+                                <div class="month">Jul</div>
+                                <div class="year">2025</div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>Green Tech Hackathon</h3>
+                            <div class="d-flex align-items-center my-2">
+                                <i class="fas fa-map-marker-alt text-success me-2"></i>
+                                <span>Hyderabad Tech Park</span>
+                            </div>
+                            <p class="text-muted">48-hour innovation marathon to develop sustainable tech solutions. ₹5L
+                                prize pool.</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="registration-badge">Team Event</span>
+                                <!-- Example in registrerDetails.html -->
+                                
+                                <a href="registrerDetails.html?id=10" class="btn btn-success btn-sm">
+                                    Apply Now <i class="fas fa-arrow-right ms-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event 11 - Sustainable Architecture -->
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
+                    <div class="card event-card h-100">
+                        <div class="card-image-wrapper">
+                            <span class="event-tag">Architecture</span>
+                            <img src="/static/images/Climate Change Youth Summit.jpg" class="card-img-top"
+                                alt="Sustainable Architecture">
+                            <div class="date-badge">
+                                <div class="day">09</div>
+                                <div class="month">Jul</div>
+                                <div class="year">2025</div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>Sustainable Architecture Conference</h3>
+                            <div class="d-flex align-items-center my-2">
+                                <i class="fas fa-map-marker-alt text-success me-2"></i>
+                                <span>Delhi Convention Center</span>
+                            </div>
+                            <p class="text-muted">Explore green building technologies and net-zero energy designs.</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="text-muted"><i class="fas fa-rupee-sign"></i> 2999</span>
+                                <a href="registrerDetails.html?id=11" class="btn btn-success btn-sm">
+                                    Book Ticket <i class="fas fa-arrow-right ms-2"></i>
+                                </a>
+                             
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event 12 - Youth Summit -->
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="450">
+                    <div class="card event-card h-100">
+                        <div class="card-image-wrapper">
+                            <span class="event-tag">Youth</span>
+                            <img src="/static/images/Climate Change Youth.jpg" class="card-img-top" alt="Youth Summit">
+                            <div class="date-badge">
+                                <div class="day">16</div>
+                                <div class="month">Jul</div>
+                                <div class="year">2025</div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>Climate Change Youth Summit</h3>
+                            <div class="d-flex align-items-center my-2">
+                                <i class="fas fa-map-marker-alt text-success me-2"></i>
+                                <span>Kolkata Eco Hub</span>
+                            </div>
+                            <p class="text-muted">Empowering young leaders with climate action strategies and networking
+                                opportunities.</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="registration-badge">Age 16-25</span>
+                                <a href="registrerDetails.html?id=12" class="btn btn-success btn-sm">
+                                    Apply <i class="fas fa-arrow-right ms-2"></i>
+                                </a>
+
+                              
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Add 8 more events following similar structure -->
+                <!-- Include events like:
+                 - Coastal Cleanup Drive
+                 - Organic Farming Seminar
+                 - E-Waste Recycling Camp
+                 - Wildlife Conservation Webinar
+                 - Green Tech Hackathon
+                 - Sustainable Architecture Conference
+                 - Climate Change Youth Summit -->
+
+            </div>
+
+
+
+
+    </section>
+    
+    <footer class="bg-dark text-light pt-5">
+        <div class="container">
+            <div class="row g-4">
+                <!-- About Column -->
+                <div class="col-lg-4 col-md-6">
+                    <h5 class="mb-4">About Gramfo</h5>
+                    <p class="text-secondary">Empowering communities through sustainable initiatives and environmental
+                        stewardship. Join us in creating a greener future.</p>
+                    <img src="assets/images/logo-white.png" alt="Gramfo Logo" style="max-width: 150px;" class="mt-3">
+                </div>
+
+                <!-- Quick Links -->
+                <div class="col-lg-2 col-md-6">
+                    <h5 class="mb-4">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="/"
+                                class="text-decoration-none text-secondary hover-green">Home</a></li>
+                        <li class="mb-2"><a href="about.html"
+                                class="text-decoration-none text-secondary hover-green">About</a></li>
+                        <li class="mb-2"><a href="upcoming-events.html"
+                                class="text-decoration-none text-secondary hover-green">Events</a></li>
+                       
+                        <li class="mb-2"><a href="contact.html"
+                                class="text-decoration-none text-secondary hover-green">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="mb-4">Contact Us</h5>
+                    <ul class="list-unstyled text-secondary">
+                        <li class="mb-3">
+                            <i class="fas fa-map-marker-alt me-2"></i>
+                            123 Green Street, Eco City, India
+                        </li>
+                        <li class="mb-3">
+                            <i class="fas fa-envelope me-2"></i>
+                            contact@gramfo.org
+                        </li>
+                        <li class="mb-3">
+                            <i class="fas fa-phone me-2"></i>
+                            +91 98765 43210
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter -->
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="mb-4">Stay Updated</h5>
+                    <form class="newsletter-form">
+                        <div class="input-group mb-3">
+                            <input type="email" class="form-control" placeholder="Enter your email" aria-label="Email">
+                            <button class="btn btn-success" type="button">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                        <small class="text-muted">Subscribe to our monthly newsletter</small>
+                    </form>
+
+                    <!-- Social Links -->
+                    <div class="social-links mt-4">
+                        <a href="#" class="text-secondary me-3 hover-green"><i class="fab fa-facebook fa-lg"></i></a>
+                        <a href="#" class="text-secondary me-3 hover-green"><i class="fab fa-twitter fa-lg"></i></a>
+                        <a href="#" class="text-secondary me-3 hover-green"><i class="fab fa-instagram fa-lg"></i></a>
+                        <a href="#" class="text-secondary me-3 hover-green"><i class="fab fa-linkedin fa-lg"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Copyright -->
+            <div class="border-top border-secondary mt-5 pt-4">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start">
+                        <p class="text-muted mb-0">&copy; 2024 Gramfo. All rights reserved.</p>
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        <a href="#" class="text-decoration-none text-muted hover-green me-3">Privacy Policy</a>
+                        <a href="#" class="text-decoration-none text-muted hover-green">Terms of Service</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 120
+        });
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // Dynamic Theme Switcher
+        function toggleTheme() {
+            const html = document.documentElement;
+            html.dataset.bsTheme = html.dataset.bsTheme === 'dark' ? 'light' : 'dark';
+        }
+
+        // Lazy Load Images
+        const lazyImages = document.querySelectorAll('img[loading="lazy"]');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.dataset.src;
+                    observer.unobserve(img);
+                }
+            });
+        });
+        lazyImages.forEach(img => observer.observe(img));
+    </script>
+    <script>document.addEventListener('DOMContentLoaded', function () {
+            const backButton = document.getElementById('backButton');
+
+            // Get the previous page URL from session storage
+            const previousPage = sessionStorage.getItem('previousPage') || '/upcoming-events.html'; // Fallback URL
+
+            // Set the button's href
+            backButton.href = previousPage;
+
+            // Store current page when leaving
+            window.onbeforeunload = function () {
+                sessionStorage.setItem('previousPage', window.location.href);
+            };
+        });</script>
+
+
+
+
+<!-- Add this JavaScript -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('searchInput');
+    const eventCards = document.querySelectorAll('.event-card');
+    const noResults = document.getElementById('noResults');
+
+    function filterEvents() {
+        const searchTerm = searchInput.value.toLowerCase();
+        let visibleCount = 0;
+
+        eventCards.forEach(card => {
+            const title = card.querySelector('h3').textContent.toLowerCase();
+            const description = card.querySelector('p').textContent.toLowerCase();
+            const isVisible = title.includes(searchTerm) || description.includes(searchTerm);
+            
+            card.style.display = isVisible ? 'block' : 'none';
+            if(isVisible) visibleCount++;
+        });
+
+        noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+    }
+
+    // Event listeners
+    searchInput.addEventListener('input', filterEvents);
+    document.getElementById('search-button').addEventListener('click', filterEvents);
+
+    // Handle Enter key
+    searchInput.addEventListener('keypress', function(e) {
+        if(e.key === 'Enter') filterEvents();
+    });
+});
+</script>
+
+</body>
+
+</html>

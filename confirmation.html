@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Confirmation - Gramfo</title>
+    
+    <!-- Required Libraries -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #2ecc71;
+            --secondary-color: #27ae60;
+            --dark-color: #2c3e50;
+            --light-color: #ecf0f1;
+        }
+
+        .confirmation-hero {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 0;
+            background: linear-gradient(135deg, rgba(46, 204, 113, 0.1), rgba(39, 174, 96, 0.05));
+        }
+
+        .confirmation-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 3rem;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .success-icon {
+            width: 100px;
+            height: 100px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            animation: scaleUp 0.6s ease;
+        }
+
+        .confirmation-details {
+            border-left: 3px solid var(--primary-color);
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .download-ticket {
+            transition: all 0.3s ease;
+            border: 2px solid var(--primary-color);
+        }
+
+        .download-ticket:hover {
+            background: var(--primary-color);
+            color: white !important;
+        }
+
+        .timeline-steps {
+            display: flex;
+            justify-content: space-between;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .timeline-step {
+            text-align: center;
+            z-index: 1;
+            flex: 1;
+        }
+
+        .timeline-step::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #ddd;
+            z-index: -1;
+        }
+
+        .step-icon {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border: 2px solid var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes scaleUp {
+            from { transform: scale(0); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .confirmation-card {
+                padding: 2rem;
+                margin: 1rem;
+            }
+
+            .confirmation-details {
+                border-left: none;
+                padding-left: 0;
+            }
+
+            .timeline-steps {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .timeline-step::before {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar (Same as previous pages) -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <!-- Your existing navbar code here -->
+    </nav>
+
+    <section class="confirmation-hero">
+        <div class="container">
+            <div class="confirmation-card" data-aos="zoom-in">
+                <div class="success-icon">
+                    <i class="fas fa-check fa-3x text-white"></i>
+                </div>
+                
+                <h1 class="text-center display-5 fw-bold mb-4">Registration Successful!</h1>
+                <p class="text-center lead text-secondary mb-5">
+                    Thank you for joining our initiative. Your participation helps create a better future.
+                </p>
+
+                <div class="confirmation-details">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <h5 class="fw-bold mb-3"><i class="fas fa-calendar-check me-2 text-success"></i>Event Details</h5>
+                            <ul class="list-unstyled text-secondary" id="eventDetails">
+                                <!-- Event details will be populated by JavaScript -->
+                            </ul>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <h5 class="fw-bold mb-3"><i class="fas fa-user-check me-2 text-success"></i>Your Details</h5>
+                            <ul class="list-unstyled text-secondary" id="userDetails">
+                                <!-- User details will be populated by JavaScript -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-steps">
+                    <div class="timeline-step">
+                        <div class="step-icon">
+                            <i class="fas fa-clipboard-check text-success"></i>
+                        </div>
+                        <h6 class="fw-bold">Registration</h6>
+                        <small class="text-muted">Completed</small>
+                    </div>
+                    
+                    <div class="timeline-step">
+                        <div class="step-icon">
+                            <i class="fas fa-ticket text-success"></i>
+                        </div>
+                        <h6 class="fw-bold">Ticket Issued</h6>
+                        <small class="text-muted">Download Below</small>
+                    </div>
+                    
+                    <div class="timeline-step">
+                        <div class="step-icon">
+                            <i class="fas fa-calendar-day text-success"></i>
+                        </div>
+                        <h6 class="fw-bold">Event Day</h6>
+                        <small class="text-muted">May 08, 2025</small>
+                    </div>
+                </div>
+
+                <div class="text-center mt-5">
+                    <a href="#" class="btn btn-lg download-ticket text-success" id="downloadTicket">
+                        <i class="fas fa-download me-2"></i>Download Ticket
+                    </a>
+                    <p class="text-muted mt-3">Share your participation</p>
+                    <div class="social-links d-flex gap-3 justify-content-center">
+                        <a href="#" class="text-success"><i class="fab fa-facebook fa-lg"></i></a>
+                        <a href="#" class="text-success"><i class="fab fa-twitter fa-lg"></i></a>
+                        <a href="#" class="text-success"><i class="fab fa-linkedin fa-lg"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer (Same as previous pages) -->
+    <footer class="bg-dark text-light py-4">
+        <!-- Your existing footer code here -->
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 120
+        });
+
+        // Function to update event and user details dynamically
+        function updateDetails() {
+            // Example data - replace with actual data from form submission
+            const eventDetails = {
+                name: "National Eco Conference",
+                date: "May 08, 2025",
+                location: "New Delhi Convention Center"
+            };
+
+            const userDetails = {
+                name: "John Doe",
+                email: "john@example.com",
+                phone: "+91 98765 43210"
+            };
+
+            // Update event details
+            const eventDetailsList = document.getElementById('eventDetails');
+            eventDetailsList.innerHTML = `
+                <li class="mb-2">${eventDetails.name}</li>
+                <li class="mb-2">${eventDetails.date}</li>
+                <li class="mb-2">${eventDetails.location}</li>
+            `;
+
+            // Update user details
+            const userDetailsList = document.getElementById('userDetails');
+            userDetailsList.innerHTML = `
+                <li class="mb-2">${userDetails.name}</li>
+                <li class="mb-2">${userDetails.email}</li>
+                <li class="mb-2">${userDetails.phone}</li>
+            `;
+        }
+
+        // Function to handle ticket download
+        function downloadTicket() {
+            // Example: Generate a simple ticket as a text file
+            const ticketContent = `
+                National Eco Conference
+                Date: May 08, 2025
+                Location: New Delhi Convention Center
+                Attendee: John Doe
+                Email: john@example.com
+                Phone: +91 98765 43210
+            `;
+
+            const blob = new Blob([ticketContent], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'event_ticket.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Attach event listeners
+        document.addEventListener('DOMContentLoaded', updateDetails);
+        document.getElementById('downloadTicket').addEventListener('click', downloadTicket);
+    </script>
+</body>
+</html>

@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard - Gramfo</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <style>
+             /* Custom Scrollbar */
+             ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 4px;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 1.5rem 2rem;
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(10px);
+        }
+
+        .navbar.scrolled {
+            padding: 0.75rem 2rem;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-logo {
+            font-weight: 700;
+            color: var(--dark-color) !important;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link {
+            color: var(--dark-color) !important;
+            font-weight: 500;
+            margin: 0 1rem;
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        :root {
+            --primary-color: #10B981;
+            --secondary-color: #059669;
+            --background: #F9FAFB;
+            --text-color: #1F2937;
+        }
+
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--background);
+        }
+
+        .dashboard-nav {
+            background: rgb(255, 255, 255);
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: none;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .participation-table {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            border: none;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .gallery-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 12px;
+            transition: transform 0.3s;
+            cursor: pointer;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .gallery-img:hover {
+            transform: scale(1.03);
+        }
+
+
+        .progress-bar {
+            transition: width 0.5s ease;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-nav {
+                margin-bottom: 1.5rem;
+            }
+
+            .photo-gallery {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+
+            .gallery-img {
+                height: 150px;
+            }
+
+            .table-responsive {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .stat-card {
+                margin-bottom: 1rem;
+            }
+        }
+
+        .hover-scale {
+            transition: transform 0.3s;
+        }
+
+        .hover-scale:hover {
+            transform: scale(1.02);
+        }
+
+        .rating-star {
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .rating-star:hover {
+            transform: scale(1.2);
+        }
+
+        .modal-content {
+            border-radius: 20px;
+            border: none;
+        }
+
+        .btn-success {
+            background-color: var(--primary-color);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+
+        .btn-success:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .badge {
+            padding: 0.5em 0.75em;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body class="bg-light">
+
+   <!-- Navigation Bar -->
+   <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+        <a class="navbar-brand nav-logo" href="#">GRAMFO</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item active"><a class="nav-link" href="/">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="/#impact">Impact</a></li>
+                <li class="nav-item"><a class="nav-link" href="/#events">Events</a></li>
+                <li class="nav-item"><a class="nav-link" href="dash-board.html">Dashboard</a></li>
+                <li class="nav-item"><a class="btn btn-success ms-3" href="login.html">Join Now</a></li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+    <!-- Dashboard Main Content -->
+    <div class="container mt-5 pt-5">
+        <div class="row g-4">
+            <!-- Left Column -->
+            <div class="col-lg-3">
+                <div class="dashboard-nav hover-scale">
+                    <div class="text-center mb-4">
+                        <img src="https://source.unsplash.com/random/200x200/?person" 
+                             class="rounded-circle mb-3 shadow-sm"
+                             alt="Profile" 
+                             style="width: 100px; height: 100px; object-fit: cover;">
+                        <h5 class="fw-bold mb-1">John Doe</h5>
+                        <p class="text-muted small">Mumbai, India</p>
+                    </div>
+                    <ul class="nav flex-column">
+                        <li class="nav-item active">
+                            <a class="nav-link text-decoration-none" href="#">
+                                <i class="fas fa-history me-2"></i> Participation History
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-decoration-none" href="#">
+                                <i class="fas fa-images me-2"></i> My Photos
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-decoration-none" href="#">
+                                <i class="fas fa-cog me-2"></i> Settings
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="col-lg-9">
+                <!-- Stats Cards -->
+                <div class="row row-cols-1 row-cols-md-3 g-4 mb-4">
+                    <div class="col">
+                        <div class="stat-card">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-success rounded-circle p-3 me-3">
+                                    <i class="fas fa-calendar-check text-white fs-5"></i>
+                                </div>
+                                <div>
+                                    <h5 class="text-muted mb-1">Events Attended</h5>
+                                    <h2 class="text-success mb-0">15</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="stat-card">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-success rounded-circle p-3 me-3">
+                                    <i class="fas fa-clock text-white fs-5"></i>
+                                </div>
+                                <div>
+                                    <h5 class="text-muted mb-1">Hours Contributed</h5>
+                                    <h2 class="text-success mb-0">45</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="stat-card">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-success rounded-circle p-3 me-3">
+                                    <i class="fas fa-trophy text-white fs-5"></i>
+                                </div>
+                                <div>
+                                    <h5 class="text-muted mb-1">Leaderboard</h5>
+                                    <h2 class="text-success mb-0">#23</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Participation History -->
+                <div class="card participation-table hover-scale">
+                    <div class="card-body">
+                        <h4 class="card-title mb-4 fw-bold">Participation History</h4>
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Event</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Event 1 -->
+                                    <tr>
+                                        <td class="fw-semibold">Beach Cleanup Drive</td>
+                                        <td>15 Nov 2023</td>
+                                        <td>
+                                            <span class="badge bg-success">Attended</span>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-sm btn-success rounded-pill px-3" 
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#uploadModal">
+                                                <i class="fas fa-upload me-2"></i>Upload
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <!-- Add more events -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Uploaded Photos -->
+                <div class="mt-5">
+                    <h4 class="mb-4 fw-bold">My Contributions</h4>
+                    <div class="photo-gallery">
+                        <!-- Add more images dynamically -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Upload Modal -->
+    <div class="modal fade" id="uploadModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0">
+                <div class="modal-header bg-success text-white border-0 rounded-top-20">
+                    <h5 class="modal-title">Share Your Experience</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="uploadForm">
+                        <!-- File Upload -->
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold">Upload Photos</label>
+                            <div class="border-dashed rounded-15 p-4 text-center bg-light">
+                                <input type="file" class="form-control" multiple accept="image/*" id="photoUpload"
+                                       hidden>
+                                <div class="py-5">
+                                    <i class="fas fa-cloud-upload-alt fa-3x text-muted mb-3"></i>
+                                    <p class="mb-1">Drag & drop files here</p>
+                                    <p class="text-muted small mb-0">or click to browse</p>
+                                </div>
+                            </div>
+                            <div class="progress mt-3" style="height: 8px;">
+                                <div class="progress-bar bg-success" role="progressbar" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <!-- Review Section -->
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold">Review</label>
+                            <textarea class="form-control rounded-10" rows="4" 
+                                      placeholder="Share your experience..."></textarea>
+                        </div>
+
+                        <!-- Star Rating -->
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold">Rating</label>
+                            <div class="star-rating d-flex gap-2">
+                                <!-- Add stars dynamically -->
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-success w-100 py-2 rounded-pill">
+                            Submit Review
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+     <!-- Footer Section -->
+     <footer class="bg-dark text-light pt-5">
+        <div class="container">
+            <div class="row g-4">
+                <!-- About Column -->
+                <div class="col-lg-4 col-md-6">
+                    <h5 class="mb-4">About Gramfo</h5>
+                    <p class="text-secondary">Empowering communities through sustainable initiatives and environmental
+                        stewardship. Join us in creating a greener future.</p>
+                    <img src="assets/images/logo-white.png" alt="Gramfo Logo" style="max-width: 150px;" class="mt-3">
+                </div>
+
+                <!-- Quick Links -->
+                <div class="col-lg-2 col-md-6">
+                    <h5 class="mb-4">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="index.html"
+                                class="text-decoration-none text-secondary hover-green">Home</a></li>
+                        <li class="mb-2"><a href="about.html"
+                                class="text-decoration-none text-secondary hover-green">About</a></li>
+                        <li class="mb-2"><a href="#events"
+                                class="text-decoration-none text-secondary hover-green">Events</a></li>
+                        <li class="mb-2"><a href="#stories"
+                                class="text-decoration-none text-secondary hover-green">Stories</a></li>
+                        <li class="mb-2"><a href="#contact"
+                                class="text-decoration-none text-secondary hover-green">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="mb-4">Contact Us</h5>
+                    <ul class="list-unstyled text-secondary">
+                        <li class="mb-3">
+                            <i class="fas fa-map-marker-alt me-2"></i>
+                            123 Green Street, Eco City, India
+                        </li>
+                        <li class="mb-3">
+                            <i class="fas fa-envelope me-2"></i>
+                            contact@gramfo.org
+                        </li>
+                        <li class="mb-3">
+                            <i class="fas fa-phone me-2"></i>
+                            +91 98765 43210
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter -->
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="mb-4">Stay Updated</h5>
+                    <form class="newsletter-form">
+                        <div class="input-group mb-3">
+                            <input type="email" class="form-control" placeholder="Enter your email" aria-label="Email">
+                            <button class="btn btn-success" type="button">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                        <small class="text-muted">Subscribe to our monthly newsletter</small>
+                    </form>
+
+                    <!-- Social Links -->
+                    <div class="social-links mt-4">
+                        <a href="#" class="text-secondary me-3 hover-green"><i class="fab fa-facebook fa-lg"></i></a>
+                        <a href="#" class="text-secondary me-3 hover-green"><i class="fab fa-twitter fa-lg"></i></a>
+                        <a href="#" class="text-secondary me-3 hover-green"><i class="fab fa-instagram fa-lg"></i></a>
+                        <a href="#" class="text-secondary me-3 hover-green"><i class="fab fa-linkedin fa-lg"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Copyright -->
+            <div class="border-top border-secondary mt-5 pt-4">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start">
+                        <p class="text-muted mb-0">&copy; 2024 Gramfo. All rights reserved.</p>
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        <a href="#" class="text-decoration-none text-muted hover-green me-3">Privacy Policy</a>
+                        <a href="#" class="text-decoration-none text-muted hover-green">Terms of Service</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+     <!-- Scripts -->
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+ 
+     <script>
+         // Initialize AOS
+         AOS.init({
+             duration: 1000,
+             once: true,
+             offset: 120
+         });
+ 
+         // Navbar Scroll Effect
+         window.addEventListener('scroll', () => {
+             const navbar = document.querySelector('.navbar');
+             navbar.classList.toggle('scrolled', window.scrollY > 50);
+         });
+ 
+         // Dynamic Theme Switcher
+         function toggleTheme() {
+             const html = document.documentElement;
+             html.dataset.bsTheme = html.dataset.bsTheme === 'dark' ? 'light' : 'dark';
+         }
+ 
+         // Lazy Load Images
+         const lazyImages = document.querySelectorAll('img[loading="lazy"]');
+         const observer = new IntersectionObserver((entries) => {
+             entries.forEach(entry => {
+                 if (entry.isIntersecting) {
+                     const img = entry.target;
+                     img.src = img.dataset.src;
+                     observer.unobserve(img);
+                 }
+             });
+         });
+         lazyImages.forEach(img => observer.observe(img));
+     </script>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/your-kit-code.js"></script>
+
+    <script>
+        // Enhanced Star Rating
+        const starRating = document.querySelector('.star-rating');
+        for (let i = 0; i < 5; i++) {
+            const star = document.createElement('i');
+            star.className = 'fas fa-star rating-star text-muted';
+            star.addEventListener('click', () => handleStarClick(i));
+            starRating.appendChild(star);
+        }
+
+        function handleStarClick(index) {
+            const stars = document.querySelectorAll('.star-rating i');
+            stars.forEach((star, i) => {
+                star.classList.toggle('text-warning', i <= index);
+                star.classList.remove('text-muted');
+            });
+        }
+
+        // Drag & Drop File Upload
+        const dropZone = document.querySelector('.border-dashed');
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.style.backgroundColor = 'rgba(16, 185, 129, 0.1)';
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.style.backgroundColor = '';
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.style.backgroundColor = '';
+            const files = e.dataTransfer.files;
+            handleFiles(files);
+        });
+
+        document.querySelector('#photoUpload').addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+        });
+
+        function handleFiles(files) {
+            // Handle file upload logic
+        }
+
+        // Form Submission
+        document.getElementById('uploadForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            // Add actual upload logic
+            this.reset();
+            document.querySelector('.progress-bar').style.width = '0%';
+            bootstrap.Modal.getInstance(document.getElementById('uploadModal')).hide();
+        });
+    </script>
+
+</body>
+</html>

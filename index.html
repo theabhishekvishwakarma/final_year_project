@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gramfo - Community Empowerment Platform</title>
+
+    <!-- Required Libraries -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #2ecc71;
+            --secondary-color: #27ae60;
+            --dark-color: #2c3e50;
+            --light-color: #ecf0f1;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 4px;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 1.5rem 2rem;
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(10px);
+        }
+
+        .navbar.scrolled {
+            padding: 0.75rem 2rem;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-logo {
+            font-weight: 700;
+            color: var(--dark-color) !important;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link {
+            color: var(--dark-color) !important;
+            font-weight: 500;
+            margin: 0 1rem;
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            height: 100vh;
+            margin-top: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-background {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            min-width: 100%;
+            min-height: 100%;
+            z-index: -1;
+        }
+
+        .gradient-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(46, 204, 113, 0.9), rgba(39, 174, 96, 0.8));
+        }
+
+        .hero-content {
+            padding-top: 25vh;
+            color: white;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Features Section */
+        .feature-card {
+            transition: all 0.3s ease;
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(5px);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Impact Counter */
+        .impact-number {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Mobile Optimization */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem !important;
+            }
+
+            .hero-content {
+                padding-top: 15vh;
+            }
+
+            .display-3 {
+                font-size: 2.5rem;
+            }
+
+            .impact-number {
+                font-size: 2rem;
+            }
+        }
+
+        /* Dark Mode Support */
+        [data-bs-theme="dark"] {
+            background: var(--dark-color);
+            color: var(--light-color);
+        }
+
+        [data-bs-theme="dark"] .navbar {
+            background: rgba(44, 62, 80, 0.95) !important;
+        }
+
+        /* Featured Stories Styles */
+        .story-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 15px !important;
+        }
+
+        .story-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1) !important;
+        }
+
+        .card-image-wrapper {
+            height: 250px;
+            overflow: hidden;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .card-img-top {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .story-card:hover .card-img-top {
+            transform: scale(1.05);
+        }
+
+        .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.7) 90%);
+        }
+
+        .category-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--primary-color);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .meta-info {
+            font-size: 0.9rem;
+        }
+
+        .btn-outline-success .transition-transform {
+            transition: transform 0.3s ease;
+        }
+
+        .btn-outline-success:hover .transition-transform {
+            transform: translateX(5px);
+        }
+
+        /* Mobile Optimization */
+        @media (max-width: 768px) {
+            .card-image-wrapper {
+                height: 200px;
+            }
+
+            .card-body {
+                padding: 1.25rem;
+            }
+
+            .story-card h3 {
+                font-size: 1.1rem;
+            }
+
+            .card-text {
+                font-size: 0.9rem;
+
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+
+            .category-badge {
+                font-size: 0.7rem;
+                padding: 3px 12px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .card-image-wrapper {
+                height: 180px;
+            }
+        }
+
+        /* Events Section Styles */
+        .event-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 15px !important;
+        }
+
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+        }
+
+        .card-image-wrapper {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .card-img-top {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .event-card:hover .card-img-top {
+            transform: scale(1.05);
+        }
+
+        .date-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .date-badge .day {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            line-height: 1;
+        }
+
+        .date-badge .month {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--dark-color);
+            text-transform: uppercase;
+        }
+
+        .date-badge .year {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        /* Mobile Optimization */
+        @media (max-width: 768px) {
+            .card-image-wrapper {
+                height: 180px;
+            }
+
+            .date-badge {
+                padding: 8px;
+            }
+
+            .date-badge .day {
+                font-size: 1.2rem;
+            }
+
+            .date-badge .month {
+                font-size: 0.8rem;
+            }
+
+            .date-badge .year {
+                font-size: 0.7rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .card-image-wrapper {
+                height: 160px;
+            }
+
+            .event-card h3 {
+                font-size: 1.1rem;
+            }
+
+            .card-text {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Footer Styles */
+        footer {
+            background: var(--dark-color) !important;
+        }
+
+        .hover-green {
+            transition: color 0.3s ease;
+        }
+
+        .hover-green:hover {
+            color: var(--primary-color) !important;
+        }
+
+        .newsletter-form .form-control {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+        }
+
+        .newsletter-form .form-control:focus {
+            box-shadow: 0 0 0 0.25rem rgba(46, 204, 113, 0.25);
+        }
+
+        .social-links i {
+            transition: transform 0.3s ease;
+        }
+
+        .social-links a:hover i {
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 768px) {
+            footer {
+                text-align: center;
+            }
+
+            .newsletter-form {
+                max-width: 300px;
+                margin: 0 auto;
+            }
+
+            .social-links {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg fixed-top bg-light">
+        <div class="container">
+            <a class="navbar-brand nav-logo" href="{{ url_for('home') }}">GRAMFO</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" href="{{ url_for('home') }}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('about') }}">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#impact">Impact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#events">Events</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                    <li class="nav-item"><a class="btn btn-success ms-3" href="{{ url_for('login') }}">Join Now</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="home">
+        <video class="video-background" autoplay muted loop playsinline>
+            <source src="../static/video/hero4.mp4" type="video/mp4">
+            Your browser does not support HTML5 video.
+        </video>
+        <!-- <div class="gradient-overlay"></div> -->
+
+        <div class="container text-center position-relative">
+            <div class="hero-content" data-aos="zoom-in">
+                <h1 class="display-3 fw-bold mb-4">Empower Communities, Create Change</h1>
+                <p class="lead fs-4 mb-5" data-aos="fade-up" data-aos-delay="200">
+                    Join 50,000+ volunteers driving sustainable development across India
+                </p>
+                <div class="cta-container" data-aos="fade-up" data-aos-delay="400">
+                    <a href="#events" class="btn btn-lg btn-light px-5 py-3 rounded-pill shadow">
+                        Get Involved <i class="fas fa-hands-helping ms-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll Progress -->
+        <div class="scroll-progress" data-aos="fade-up" data-aos-delay="600">
+            <div class="progress-bar"></div>
+        </div>
+    </section>
+
+    <!-- Impact Section -->
+    <section class="py-5 bg-light" id="impact" style="padding-top: 5rem !important;">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold">Our Collective Impact</h2>
+                <p class="text-muted">Creating measurable change across communities</p>
+            </div>
+
+            <div class="row g-4 text-center">
+                <div class="col-md-4" data-aos="fade-up">
+                    <div class="p-4 feature-card">
+                        <i class="fas fa-users fa-3x text-primary mb-3"></i>
+                        <h3 class="impact-number">50K+</h3>
+                        <p class="text-muted">Active Volunteers</p>
+                    </div>
+                </div>
+
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="p-4 feature-card">
+                        <i class="fas fa-tree fa-3x text-success mb-3"></i>
+                        <h3 class="impact-number">2M+</h3>
+                        <p class="text-muted">Trees Planted</p>
+                    </div>
+                </div>
+
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="400">
+                    <div class="p-4 feature-card">
+                        <i class="fas fa-hand-holding-water fa-3x text-info mb-3"></i>
+                        <h3 class="impact-number">500+</h3>
+                        <p class="text-muted">Water Projects</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Stories Section -->
+    <section class="py-5" id="stories">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold mb-3">Impact Stories</h2>
+                <p class="text-muted">Discover inspiring stories from our community</p>
+            </div>
+
+            <div class="row g-4">
+                <!-- Story Card 1 -->
+                <div class="col-lg-4 col-md-6" data-aos="fade-up">
+                    <article class="card story-card h-100 border-0 shadow-lg overflow-hidden">
+                        <div class="card-image-wrapper position-relative">
+                            <img src="../static/images/plastic-waste.jpg" class="card-img-top" alt="Plastic Revolution">
+                            <div class="image-overlay"></div>
+                            <span class="category-badge">Environment</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="meta-info d-flex justify-content-between mb-3">
+                                <small class="text-muted"><i class="fas fa-calendar me-1"></i>15 March 2024</small>
+                                <small class="text-muted"><i class="fas fa-eye me-1"></i>15K Views</small>
+                            </div>
+                            <h3 class="h5 fw-bold mb-3">Plastic Revolution in Mumbai</h3>
+                            <p class="card-text text-secondary mb-4">How local volunteers transformed waste management
+                                in Dharavi through innovative recycling solutions and community engagement.</p>
+                                <a href="viewstory.html?id=5" 
+                                class="btn btn-outline-success w-100 d-flex align-items-center justify-content-center"
+                                data-story-id="5">
+                                 View Impact
+                                 <i class="fas fa-arrow-right ms-3"></i>
+                             </a>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- Story Card 2 -->
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <article class="card story-card h-100 border-0 shadow-lg overflow-hidden">
+                        <div class="card-image-wrapper position-relative">
+                            <img src="../static/images/GoaBeachRestoration.webp" class="card-img-top" alt="Beach Cleanup">
+                            <div class="image-overlay"></div>
+                            <span class="category-badge">Cleanup</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="meta-info d-flex justify-content-between mb-3">
+                                <small class="text-muted"><i class="fas fa-calendar me-1"></i>2 April 2024</small>
+                                <small class="text-muted"><i class="fas fa-eye me-1"></i>8K Views</small>
+                            </div>
+                            <h3 class="h5 fw-bold mb-3">Goa Beach Restoration</h3>
+                            <p class="card-text text-secondary mb-4">Community-led initiative removes 5 tons of waste
+                                from popular tourist beaches, implementing sustainable waste management systems.</p>
+                                <a href="viewstory.html?id=6" 
+                                class="btn btn-outline-success w-100 d-flex align-items-center justify-content-center"
+                                data-story-id="6">
+                                 View Impact
+                                 <i class="fas fa-arrow-right ms-3"></i>
+                             </a>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- Story Card 3 -->
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <article class="card story-card h-100 border-0 shadow-lg overflow-hidden">
+                        <div class="card-image-wrapper position-relative">
+                            <img src="../static/images/SustainableLivingWorkshop.jpg" class="card-img-top"
+                                alt="Sustainable Workshop">
+                            <div class="image-overlay"></div>
+                            <span class="category-badge">Education</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="meta-info d-flex justify-content-between mb-3">
+                                <small class="text-muted"><i class="fas fa-calendar me-1"></i>25 April 2024</small>
+                                <small class="text-muted"><i class="fas fa-eye me-1"></i>12K Views</small>
+                            </div>
+                            <h3 class="h5 fw-bold mb-3">Sustainable Living Workshop</h3>
+                            <p class="card-text text-secondary mb-4">Empowering rural communities with practical
+                                workshops on eco-friendly practices and renewable energy solutions.</p>
+                                <a href="viewstory.html?id=7" 
+                                class="btn btn-outline-success w-100 d-flex align-items-center justify-content-center"
+                                data-story-id="7">
+                                 View Impact
+                                 <i class="fas fa-arrow-right ms-3"></i>
+                             </a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+            <!-- View More Button -->
+            <div class="text-center mt-5" data-aos="fade-up">
+                <a href="watchStory.html" class="btn btn-success px-5 py-3">
+                    View All Stories <i class="fas fa-arrow-circle-right ms-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Add more initiative cards -->
+    <!-- Upcoming Events Section -->
+    <section class="py-5 bg-light" id="events" style="padding-top: 0rem !important;">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-5 fw-bold mb-3">Upcoming Events</h2>
+            <p class="text-muted">Join our upcoming initiatives for sustainable change</p>
+        </div>
+
+        <div class="row g-4">
+            <!-- Event 1 -->
+            <div class="col-lg-4 col-md-6" data-aos="fade-up">
+                <div class="card event-card h-100 border-0 shadow-lg overflow-hidden">
+                    <div class="card-image-wrapper position-relative">
+                        <img src="../static/images/NationalEcoConference.jpg" class="card-img-top"
+                            alt="National Eco Conference">
+                        <div class="date-badge">
+                            <div class="day">08</div>
+                            <div class="month">May</div>
+                            <div class="year">2025</div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="h5 fw-bold mb-2">National Eco Conference</h3>
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-map-marker-alt text-success me-2"></i>
+                            <small class="text-muted">New Delhi Convention Center</small>
+                        </div>
+                        <p class="card-text text-secondary mb-4">Join thought leaders and environmental experts to
+                            shape the future of sustainable development in India.</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="registrerDetails.html?id=1" class="btn btn-success btn-sm">
+                                Register Now <i class="fas fa-arrow-right ms-2"></i>
+                            </a>
+                            <small class="text-muted"><i class="fas fa-users me-1"></i>120+ Attending</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event 2 -->
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="card event-card h-100 border-0 shadow-lg overflow-hidden">
+                    <div class="card-image-wrapper position-relative">
+                        <img src="../static/images/GangesCleanupDrive.png" class="card-img-top" alt="Ganges Cleanup Drive">
+                        <div class="date-badge">
+                            <div class="day">15</div>
+                            <div class="month">May</div>
+                            <div class="year">2025</div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="h5 fw-bold mb-2">Ganges Cleanup Drive</h3>
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-map-marker-alt text-success me-2"></i>
+                            <small class="text-muted">Varanasi Riverfront</small>
+                        </div>
+                        <p class="card-text text-secondary mb-4">Massive community-led initiative to clean and
+                            preserve India's most sacred river.</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="registrerDetails.html?id=2" class="btn btn-success btn-sm">
+                                Join Now <i class="fas fa-arrow-right ms-2"></i>
+                            </a>
+                            <small class="text-muted"><i class="fas fa-users me-1"></i>500+ Volunteers</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event 3 -->
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="card event-card h-100 border-0 shadow-lg overflow-hidden">
+                    <div class="card-image-wrapper position-relative">
+                        <img src="../static/images/SolarEnergyWorkshop.jpg" class="card-img-top"
+                            alt="Solar Energy Workshop">
+                        <div class="date-badge">
+                            <div class="day">22</div>
+                            <div class="month">May</div>
+                            <div class="year">2025</div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="h5 fw-bold mb-2">Solar Energy Workshop</h3>
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-map-marker-alt text-success me-2"></i>
+                            <small class="text-muted">Bengaluru Tech Park</small>
+                        </div>
+                        <p class="card-text text-secondary mb-4">Hands-on training session for implementing solar
+                            solutions in urban and rural areas.</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="registrerDetails.html?id=3" class="btn btn-success btn-sm">
+                                Enroll Now <i class="fas fa-arrow-right ms-2"></i>
+                            </a>
+                            <small class="text-muted"><i class="fas fa-users me-1"></i>80+ Participants</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- View More Button -->
+        <div class="text-center my-5" data-aos="fade-up">
+            <a href="upcoming-events.html" class="btn btn-outline-success px-5 py-3">
+                View All Events <i class="fas fa-calendar-alt ms-2"></i>
+            </a>
+        </div>
+    </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="bg-dark text-light pt-5">
+        <div class="container">
+            <div class="row g-4">
+                <!-- About Column -->
+                <div class="col-lg-4 col-md-6">
+                    <h5 class="mb-4">About Gramfo</h5>
+                    <p class="text-secondary">Empowering communities through sustainable initiatives and environmental
+                        stewardship. Join us in creating a greener future.</p>
+                    <img src="../static/images/logo-white.png" alt="Gramfo Logo" style="max-width: 150px;" class="mt-3">
+                </div>
+
+                <!-- Quick Links -->
+                <div class="col-lg-2 col-md-6">
+                    <h5 class="mb-4">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="/"
+                                class="text-decoration-none text-secondary hover-green">Home</a></li>
+                        <li class="mb-2"><a href="about.html"
+                                class="text-decoration-none text-secondary hover-green">About</a></li>
+                        <li class="mb-2"><a href="upcoming-events.html"
+                                class="text-decoration-none text-secondary hover-green">Events</a></li>
+                        <li class="mb-2"><a href="contact.html"
+                                class="text-decoration-none text-secondary hover-green">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="mb-4"><a href="contact.html" style="text-decoration: none;color:#fff">Contact Us</a></h5>
+                    <ul class="list-unstyled text-secondary">
+                        <li class="mb-3">
+                            <i class="fas fa-map-marker-alt me-2"></i>
+                            123 Green Street, Eco City, India
+                        </li>
+                        <li class="mb-3">
+                            <i class="fas fa-envelope me-2"></i>
+                            contact@gramfo.org
+                        </li>
+                        <li class="mb-3">
+                            <i class="fas fa-phone me-2"></i>
+                            +91 98765 43210
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter -->
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="mb-4">Stay Updated</h5>
+                    <form class="newsletter-form">
+                        <div class="input-group mb-3">
+                            <input type="email" class="form-control" placeholder="Enter your email" aria-label="Email">
+                            <button class="btn btn-success" type="button">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                        <small class="text-muted">Subscribe to our monthly newsletter</small>
+                    </form>
+
+                    <!-- Social Links -->
+                    <div class="social-links mt-4">
+                        <a href="#" class="text-secondary me-3 hover-green"><i class="fab fa-facebook fa-lg"></i></a>
+                        <a href="#" class="text-secondary me-3 hover-green"><i class="fab fa-twitter fa-lg"></i></a>
+                        <a href="#" class="text-secondary me-3 hover-green"><i class="fab fa-instagram fa-lg"></i></a>
+                        <a href="#" class="text-secondary me-3 hover-green"><i class="fab fa-linkedin fa-lg"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Copyright -->
+            <div class="border-top border-secondary mt-5 pt-4">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start">
+                        <p class="text-muted mb-0">&copy; 2024 Gramfo. All rights reserved.</p>
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        <a href="#" class="text-decoration-none text-muted hover-green me-3">Privacy Policy</a>
+                        <a href="#" class="text-decoration-none text-muted hover-green">Terms of Service</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 120
+        });
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // Dynamic Theme Switcher
+        function toggleTheme() {
+            const html = document.documentElement;
+            html.dataset.bsTheme = html.dataset.bsTheme === 'dark' ? 'light' : 'dark';
+        }
+
+        // Lazy Load Images
+        const lazyImages = document.querySelectorAll('img[loading="lazy"]');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.dataset.src;
+                    observer.unobserve(img);
+                }
+            });
+        });
+        lazyImages.forEach(img => observer.observe(img));
+    </script>
+</body>
+
+</html>
